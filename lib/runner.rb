@@ -1,4 +1,4 @@
-require './lib/mastermind'
+require './mastermind'
 
 puts "Welcome to Mastermind"
 
