@@ -1,4 +1,4 @@
-require './lib/prefix_calculator'
+require './lib/mastermind'
 
 puts "Welcome to Mastermind"
 
