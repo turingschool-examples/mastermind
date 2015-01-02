@@ -1,13 +1,15 @@
-require './mastermind'
+require_relative 'printer'
+require_relative 'mastermind'
 
-puts "Welcome to Mastermind"
+printer = Printer.new
+evaluator = Mastermind.new(printer)
 
-input = ""
-mastermind = Mastermind.new
+print printer.welcome_message
 
-while input != "q"
-  print "> "
+signal = :continue
+
+until signal == :stop
   input = gets.chomp
-  puts mastermind.execute(input)
+  message, signal = evaluator.execute(input)
+  print message
 end
-puts "Goodbye!"
