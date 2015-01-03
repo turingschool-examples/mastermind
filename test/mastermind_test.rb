@@ -17,10 +17,18 @@ class MastermindTest < Minitest::Test
   end
 
   def test_it_starts_a_game
-    assert evaluator.number.nil?
+    assert evaluator.sequence.nil?
     evaluator.execute 'p'
-    assert evaluator.number.is_a? Integer
-    assert (1..5).include? evaluator.number
+    assert evaluator.sequence.is_a? String
+    evaluator.sequence.chars.each do |char|
+      assert ["R", "G", "B", "Y"].include? char
+    end
+  end
+
+  def test_it_validates_menu_input
+    evaluator.execute 'r'
+    message = evaluator.execute 'r'
+    assert message.include? 'Invalid'
   end
 
   def test_read_instructions
@@ -30,26 +38,10 @@ class MastermindTest < Minitest::Test
     assert_equal signal, :continue
   end
 
-  def test_guess_is_too_high
-    evaluator.execute 'p'
-    evaluator.number = 5
-    message, signal = evaluator.execute '10'
-    assert message.include? "too high"
-    assert_equal signal, :continue
-  end
-
-  def test_guess_is_too_low
-    evaluator.execute 'p'
-    evaluator.number = 5
-    message, signal = evaluator.execute '1'
-    assert message.include? "too low"
-    assert_equal signal, :continue
-  end
-
   def test_guess_is_correct
     evaluator.execute 'p'
-    evaluator.number = 5
-    message, signal = evaluator.execute '5'
+    evaluator.sequence = "RGBY"
+    message, signal = evaluator.execute "RGBY"
     assert message.include? "You won!"
     assert_equal signal, :continue
   end

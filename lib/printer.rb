@@ -21,10 +21,6 @@ class Printer
     "Your guess is too high\n> "
   end
 
-  def too_low
-    "Your guess is too low\n> "
-  end
-
   def correct_guess
     "You won!\n> "
   end
@@ -34,6 +30,6 @@ class Printer
   end
 
   def end_round
-    "You ended the round.\n> "
+    "You ended the round.\nWould you like to (p)lay, read the (i)nstructions, or (q)uit?\n> "
   end
 end
