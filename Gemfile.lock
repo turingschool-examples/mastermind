@@ -8,6 +8,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-nav (0.2.4)
+      pry (>= 0.9.10, < 0.11.0)
     slop (3.6.0)
 
 PLATFORMS
@@ -16,3 +18,4 @@ PLATFORMS
 DEPENDENCIES
   minitest
   pry
+  pry-nav
