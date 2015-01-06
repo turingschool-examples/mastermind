@@ -1,15 +1,15 @@
 require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative '../lib/mastermind'
-require_relative '../lib/printer'
+require './lib/mastermind'
+require './lib/printer'
 
 class MastermindTest < Minitest::Test
-  attr_reader :evaluator
+  attr_reader :mastermind
 
   def setup
-    printer    = Printer.new # only needed to pass to evaluator
-    @evaluator = Mastermind.new(printer)
+    printer     = Printer.new # only needed to pass to mastermind
+    @mastermind = Mastermind.new(printer)
   end
 
   def test_it_exists
@@ -17,45 +17,50 @@ class MastermindTest < Minitest::Test
   end
 
   def test_it_starts_a_game
-    assert evaluator.sequence.nil?
-    evaluator.execute 'p'
-    assert evaluator.sequence.is_a? String
-    evaluator.sequence.chars.each do |char|
+    assert mastermind.sequence.nil?
+    mastermind.execute "p"
+    assert mastermind.sequence.is_a? String
+    mastermind.sequence.chars.each do |char|
       assert ["R", "G", "B", "Y"].include? char
     end
   end
 
   def test_it_validates_menu_input
-    evaluator.execute 'r'
-    message = evaluator.execute 'r'
-    assert message.include? 'Invalid'
+    message = mastermind.execute "r"
+    assert message.include? "Invalid"
   end
 
   def test_read_instructions
-    evaluator.execute 'i'
-    message, signal = evaluator.execute 'i'
-    assert message.include? 'How to Play MASTERMIND'
+    message, signal = mastermind.execute "i"
+    assert message.include? "How to Play MASTERMIND"
+    assert_equal signal, :continue
+  end
+
+  def test_guess_is_wrong
+    mastermind.sequence = "RGBG"
+    message, signal = mastermind.play_game "GGBR"
+    assert message.include? "correct Elements"
     assert_equal signal, :continue
   end
 
   def test_guess_is_correct
-    evaluator.execute 'p'
-    evaluator.sequence = "RGBY"
-    message, signal = evaluator.execute "RGBY"
+    mastermind.execute "p"
+    mastermind.sequence = "RGBY"
+    message, signal = mastermind.execute "RGBY"
     assert message.include? "You won!"
     assert_equal signal, :continue
   end
 
   def test_quit_game_completely
-    message, signal = evaluator.execute 'q'
-    assert message.include? 'Thanks for playing!'
+    message, signal = mastermind.execute "q"
+    assert message.include? "Thanks for playing!"
     assert_equal signal, :stop
   end
 
   def test_quit_game_round
-    evaluator.execute 'p'
-    message, signal = evaluator.execute 'q'
-    assert message.include? 'You ended the round.'
+    mastermind.execute "p"
+    message, signal = mastermind.execute "q"
+    assert message.include? "You ended the round."
     assert_equal signal, :continue
   end
 end

@@ -17,12 +17,12 @@ class Printer
         4. Keep guessing until you get it! I believe in you!\n> "
   end
 
-  def too_high
-    "Your guess is too high\n> "
+  def incorrect_guess(guess, correct, count)
+    "#{guess} has #{correct} correct Elements with #{count} in the correct Position\n> "
   end
 
   def correct_guess
-    "You won!\n> "
+    "You won!\nWould you like to (p)lay again, read the (i)nstructions, or (q)uit?\n> "
   end
 
   def quit_game
@@ -30,6 +30,6 @@ class Printer
   end
 
   def end_round
-    "You ended the round.\nWould you like to (p)lay, read the (i)nstructions, or (q)uit?\n> "
+    "You ended the round.\nWould you like to (p)lay again, read the (i)nstructions, or (q)uit?\n> "
   end
 end
