@@ -17,12 +17,16 @@ class Printer
         4. Keep guessing until you get it! I believe in you!\n> "
   end
 
-  def incorrect_guess(guess, correct, count)
-    "#{guess} has #{correct} correct Elements with #{count} in the correct Position\n> "
+  def sequence_generated
+    "A beginner sequence has been generated with 4 elements made up of: (R)ed, (Y)ellow, (B)lue, and (G)reen. Use (q)uit at any time to end the round.\nWhat's your guess?\n> "
   end
 
   def correct_guess
     "You won!\nWould you like to (p)lay again, read the (i)nstructions, or (q)uit?\n> "
+  end
+
+  def incorrect_guess(guess, correct_elements, correct_position)
+    "#{guess} has #{correct_elements} correct Elements with #{correct_position} in the correct Position\n> "
   end
 
   def invalid_input

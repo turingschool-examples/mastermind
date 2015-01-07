@@ -1,11 +1,10 @@
-require_relative 'printer'
-require_relative 'mastermind'
+require './lib/printer'
+require './lib/mastermind'
 
 printer = Printer.new
 evaluator = Mastermind.new(printer)
 
 print printer.welcome_message
-
 signal = :continue
 
 until signal == :stop

@@ -1,14 +1,18 @@
+require 'pry'
+
 class Mastermind
   attr_reader   :printer, :game_in_progress
-  attr_accessor :sequence
+  attr_accessor :sequence, :guess
 
   def initialize(printer)
     @printer = printer
     @game_in_progress = false
+    @sequence = ""
   end
 
   def execute(input)
     @input = input
+    @guess = input.upcase.to_s
     return game_menu unless game_in_progress
     play_game
   end
@@ -21,36 +25,44 @@ class Mastermind
   end
 
   def game_menu
-    if input == "p" || input == "play"
-      @game_in_progress = true
-      @sequence = ""
-      4.times { @sequence << ["R", "Y", "G", "B"].sample }
-      "A random sequence has been generated\n> "
-    elsif input == "i" || input == "instructions"
-      [printer.read_instructions, :continue]
-    elsif input == "q" || input == "quit"
-      [printer.quit_game, :stop]
-    else
-      [printer.invalid_input, :continue]
-    end
+    return generate_sequence if input =~ /p.*/
+    return [printer.read_instructions, :continue] if input =~ /i.*/
+    return [printer.quit_game, :stop] if input =~ /q.*/
+    [printer.invalid_input, :continue]
   end
 
   def play_game
+    return [printer.end_round, :continue] if end_round?
+    return [printer.invalid_input, :continue] unless valid_input?
+    game_status
+  end
+
+  def generate_sequence
+    @game_in_progress = true
+    4.times { @sequence << ["R", "Y", "G", "B"].sample }
+    printer.sequence_generated
+  end
+
+  def game_status
+    if guess != sequence
+      correct_chars = correct_chars(guess, sequence)
+      correct_position = correct_position(guess, sequence)
+      [printer.incorrect_guess(guess, correct_chars, correct_position), :continue]
+    else
+      @game_in_progress = false
+      [printer.correct_guess, :continue]
+    end
+  end
+
+  def valid_input?
+    return true if guess =~ /[RGBY]{4}/
+  end
+
+  def end_round?
     if input == "q" || input == "quit"
       @game_in_progress = false
-      return [printer.end_round, :continue]
+      return true
     end
-
-    guess = input.upcase.to_s
-    @sequence = sequence.upcase
-
-    unless guess == sequence
-      correct_elements = correct_chars(guess, sequence)
-      correct_position = correct_ref(guess, sequence)
-      return [printer.incorrect_guess(guess, correct_elements, correct_position), :continue]
-    end
-    @game_in_progress = false
-    [printer.correct_guess, :continue]
   end
 
   def correct_chars(guess, sequence)
@@ -59,13 +71,11 @@ class Mastermind
     end
   end
 
-  def correct_ref(guess, sequence)
-    correct_position = 0
+  def correct_position(guess, sequence)
+    count = 0
     guess.chars.each_with_index do |char, index|
-      if char == sequence[index]
-        correct_position += 1
-      end
+      count += 1 if char == sequence[index]
     end
-    correct_position
+    count
   end
 end

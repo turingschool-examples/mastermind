@@ -18,9 +18,8 @@ class MastermindTest < Minitest::Test
   end
 
   def test_it_starts_a_game
-    assert mastermind.sequence.nil?
+    assert_equal "", mastermind.sequence
     mastermind.execute "p"
-    assert mastermind.sequence.is_a? String
     mastermind.sequence.chars.each do |char|
       assert ["R", "G", "B", "Y"].include? char
     end
@@ -36,7 +35,7 @@ class MastermindTest < Minitest::Test
     message = mastermind.execute "p"
     mastermind.sequence = "RGBG"
     message, signal = mastermind.execute "BVDF"
-    assert message.include? "Invalid "
+    assert message.include? "Invalid"
     assert_equal signal, :continue
   end
 
