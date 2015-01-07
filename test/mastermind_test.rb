@@ -1,3 +1,4 @@
+require 'pry'
 require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
@@ -26,8 +27,17 @@ class MastermindTest < Minitest::Test
   end
 
   def test_it_validates_menu_input
-    message = mastermind.execute "r"
+    message, signal = mastermind.execute "r"
     assert message.include? "Invalid"
+    assert_equal signal, :continue
+  end
+
+  def test_it_validates_game_input
+    message = mastermind.execute "p"
+    mastermind.sequence = "RGBG"
+    message, signal = mastermind.execute "BVDF"
+    assert message.include? "Invalid "
+    assert_equal signal, :continue
   end
 
   def test_read_instructions
@@ -37,8 +47,9 @@ class MastermindTest < Minitest::Test
   end
 
   def test_guess_is_wrong
+    mastermind.execute "play"
     mastermind.sequence = "RGBG"
-    message, signal = mastermind.play_game "GGBR"
+    message, signal = mastermind.execute "RGRR"
     assert message.include? "correct Elements"
     assert_equal signal, :continue
   end

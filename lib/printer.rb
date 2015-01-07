@@ -25,6 +25,10 @@ class Printer
     "You won!\nWould you like to (p)lay again, read the (i)nstructions, or (q)uit?\n> "
   end
 
+  def invalid_input
+    "Invalid input. Try again\n> "
+  end
+
   def quit_game
     "Thanks for playing!\n"
   end
