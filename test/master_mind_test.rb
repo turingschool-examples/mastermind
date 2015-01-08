@@ -42,25 +42,36 @@ class MastermindTest < Minitest::Test
     assert Message.invalid_guess, checker
   end
 
-  def test_it_can_handle_upcase
-    mm = Mastermind.new
-    checker = mm.valid_guess("GRBY")
-    assert valid_guess
-  end
-
   def test_it_checks_the_number_of_correct_colors
     mm = Mastermind.new
     checker = mm.evaluate("bbgb")
     assert_equal 3, checker
   end
 
-
-  def test_it_wins
+  def test_it_starts_at_turn_1_when_game_starts
     mm = Mastermind.new
-    stubs.play
-    result = mm.play(guess)
-    @secret =["b", "b", "g", "b"]
+    mm.execute("p")
+    assert_equal 1, @game_turn
+  end
+
+  def test_it_confirms_correct_locations
+    mm = Mastermind.new
+    mm.correct_positions(["b", "b", "g", "r"])
+    assert_equal 3, correct_positions
+  end
+
+  def test_it_checks_the_number_of_correct_colors
+    mm = Mastermind.new
+    checker = mm.correct_elements("bbgb")
+    assert_equal 3, checker
+  end
+
+def test_it_wins
+    mm = Mastermind.new
+    result = mm.play(["b", "b", "g", "b"])
     confirmed = guess == @secret.join("")
     assert confirmed
   end
+
+
 end

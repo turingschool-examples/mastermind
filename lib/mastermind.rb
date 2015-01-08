@@ -70,7 +70,6 @@ class Mastermind
   	when guesser < 4 then puts Message.too_short
     when guesser > 4 then puts Message.too_long   
     when guesser == 4
-      guess.downcase!
       guess = guess.chars
       valid_guess = guess.all?{ |color| color.match(/[rgby]/)}
        if valid_guess == true
