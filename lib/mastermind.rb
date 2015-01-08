@@ -8,7 +8,6 @@ class Mastermind
 	def initialize 
 		@color_selector = ["r", "g", "b", "y"]
 		@secret = nil
-		
 	end
 
   def execute(input)
@@ -63,7 +62,6 @@ class Mastermind
       @secret << @color_selector.sample 
       count +=1 
     end
-    p @secret
   end
 
   def valid_guess(guess)

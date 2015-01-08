@@ -24,21 +24,6 @@ class MastermindTest < Minitest::Test
     assert Message.see_you_soon, result
   end
 
-
-  def test_secret_is_random
-    skip
-    mm1 = Mastermind.new
-    result1 = mm1.execute("p")
-    secret1 = mm1.play
-    mm2 = Mastermind.new
-    result2 = mm2.execute("p")
-    secret2 = mm2.play
-    valid = secret1 == secret2
-    refute valid
-  end
-
-
-
   def test_it_checks_if_guess_is_too_short
     mm = Mastermind.new
     checker = mm.valid_guess("rgb")
@@ -63,19 +48,19 @@ class MastermindTest < Minitest::Test
     assert valid_guess
   end
 
-  # def test_it_checks_the_number_of_correct_colors
-  #   mm = Mastermind.new
-  #   checker = mm.evaluate("bbgb")
-  #   assert_equal 3, checker
-  # end
+  def test_it_checks_the_number_of_correct_colors
+    mm = Mastermind.new
+    checker = mm.evaluate("bbgb")
+    assert_equal 3, checker
+  end
 
 
-  # def test_it_wins
-  #   mm = Mastermind.new
-  #   guess = ("bbgb")
-  #   result = mm.play
-  #   @secret =["b", "b", "g", "b"]
-  #   confirmed = guess == @secret.join("")
-  #   assert confirmed
-  # end
+  def test_it_wins
+    mm = Mastermind.new
+    stubs.play
+    result = mm.play(guess)
+    @secret =["b", "b", "g", "b"]
+    confirmed = guess == @secret.join("")
+    assert confirmed
+  end
 end
