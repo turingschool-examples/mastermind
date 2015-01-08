@@ -12,8 +12,7 @@ class Mastermind
   def execute(input)
     @input = input
     @guess = input.upcase.to_s
-    return menu unless in_progress
-    play_game
+    in_progress ? play_game : menu
   end
 
   private
@@ -47,8 +46,7 @@ class Mastermind
 
   def status
     return [printer.lost_game, :continue] if lost?
-    return keep_guessing unless finished?
-    player_wins
+    finished? ? player_wins : keep_guessing
   end
 
   def keep_guessing
