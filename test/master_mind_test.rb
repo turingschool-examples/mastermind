@@ -1,7 +1,9 @@
+
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/mastermind'
 require './lib/message'
+
 
 class MastermindTest < Minitest::Test
 
@@ -55,17 +57,25 @@ class MastermindTest < Minitest::Test
     assert Message.invalid_guess, checker
   end
 
-  def test_it_checks_the_number_of_correct_colors
+  def test_it_can_handle_upcase
     mm = Mastermind.new
-    
-    assert_equal 3, checker
+    checker = mm.valid_guess("GRBY")
+    assert valid_guess
   end
 
+  # def test_it_checks_the_number_of_correct_colors
+  #   mm = Mastermind.new
+  #   checker = mm.evaluate("bbgb")
+  #   assert_equal 3, checker
+  # end
 
-  def test_it_wins
-    mm = Mastermind.new
-    result = mm.execute("bbgb")
 
-    assert result.include?("win")
-  end
+  # def test_it_wins
+  #   mm = Mastermind.new
+  #   guess = ("bbgb")
+  #   result = mm.play
+  #   @secret =["b", "b", "g", "b"]
+  #   confirmed = guess == @secret.join("")
+  #   assert confirmed
+  # end
 end

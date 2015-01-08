@@ -8,7 +8,7 @@ class Mastermind
 	def initialize 
 		@color_selector = ["r", "g", "b", "y"]
 		@secret = nil
-		@game_turn = 1
+		
 	end
 
   def execute(input)
@@ -16,6 +16,7 @@ class Mastermind
       puts Message.instructions
     elsif input == 'p' || input == "play"
     	@time_start = Time.now
+    	@game_turn = 1
     	play
     else
       puts Message.see_you_soon
