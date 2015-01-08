@@ -1,6 +1,9 @@
+require 'pry'
+require './lib/message' 
 require './lib/mastermind'
 
-puts "Welcome to Mastermind"
+puts Message.initial
+puts Message.game_menu
 
 input = ""
 mastermind = Mastermind.new
