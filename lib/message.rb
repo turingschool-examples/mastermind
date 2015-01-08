@@ -62,5 +62,13 @@ module Message
   	"Please play again soon!"
   end
 
+  def self.guess_and_time(game_turn, total_time)
+  	"Congratulations! You won the game in #{total_time[0]} minutes #{total_time[1]} seconds and took #{game_turn} guesses."
+  end
+
+  def self.play_again?
+  	"Would you like to play again? Enter (p)lay or (q)uit to exit"
+  end
+
 
 end

@@ -24,6 +24,7 @@ class MastermindTest < Minitest::Test
 
 
   def test_secret_is_random
+    skip
     mm1 = Mastermind.new
     result1 = mm1.execute("p")
     secret1 = mm1.play
@@ -54,9 +55,17 @@ class MastermindTest < Minitest::Test
     assert Message.invalid_guess, checker
   end
 
+  def test_it_checks_the_number_of_correct_colors
+    mm = Mastermind.new
+    
+    assert_equal 3, checker
+  end
+
+
   def test_it_wins
     mm = Mastermind.new
-    result = mm.execute("BBGB")
+    result = mm.execute("bbgb")
+
     assert result.include?("win")
   end
 end
