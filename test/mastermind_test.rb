@@ -39,6 +39,14 @@ class MastermindTest < Minitest::Test
     assert_equal signal, :continue
   end
 
+  def test_it_validates_tricky_game_input
+    message = mastermind.execute "p"
+    mastermind.sequence = "RGBG"
+    message, signal = mastermind.execute "RGBBBYYY"
+    assert message.include? "Invalid"
+    assert_equal signal, :continue
+  end
+
   def test_read_instructions
     message, signal = mastermind.execute "i"
     assert message.include? "How to Play MASTERMIND"

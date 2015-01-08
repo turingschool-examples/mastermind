@@ -1,3 +1,5 @@
+require 'colorize'
+
 class Printer
 
   def welcome_message
@@ -18,15 +20,15 @@ class Printer
   end
 
   def sequence_generated
-    "A beginner sequence has been generated with 4 elements made up of:\n(R)ed, (Y)ellow, (B)lue, and (G)reen.\nUse (q)uit at any time to end the round.\nWhat's your guess?\n> "
+    "A beginner sequence has been generated with 4 elements made up of:\n(#{"R".red})ed, (#{"Y".yellow})ellow, (#{"B".blue})lue, and (#{"G".green})reen.\nUse (q)uit at any time to end the round.\nWhat's your guess?\n> "
   end
 
-  def correct_guess(end_time)
-    "You won in #{end_time}\nWould you like to (p)lay again, read the (i)nstructions, or (q)uit?\n> "
+  def correct_guess(end_time, guess)
+    "Correct! #{colorize(guess)} was the sequence!\nYou won in #{end_time}\nWould you like to (p)lay again, read the (i)nstructions, or (q)uit?\n> "
   end
 
   def incorrect_guess(guess, correct_elements, correct_position, guesses_taken)
-    "#{guess} has #{correct_elements} correct Elements with #{correct_position} in the correct Position\nNumber of guesses taken: #{guesses_taken}\n> "
+    "#{colorize(guess)} has #{correct_elements} correct Elements with #{correct_position} in the correct Position\nNumber of guesses taken: #{guesses_taken}\n> "
   end
 
   def invalid_input
@@ -43,5 +45,18 @@ class Printer
 
   def end_round
     "You ended the round.\nWould you like to (p)lay again, read the (i)nstructions, or (q)uit?\n> "
+  end
+
+  def colorize(sequence)
+    sequence.split("").map { |letter| color_it(letter) }.join("")
+  end
+
+  def color_it(letter)
+    case letter
+    when "R" then letter.red
+    when "G" then letter.green
+    when "B" then letter.blue
+    when "Y" then letter.yellow
+    end
   end
 end

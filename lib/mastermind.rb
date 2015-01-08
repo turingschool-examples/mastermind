@@ -61,7 +61,7 @@ class Mastermind
   def player_wins
     @in_progress = false
     end_time
-    [printer.correct_guess(end_time), :continue]
+    [printer.correct_guess(end_time, guess), :continue]
   end
 
   def lost?
@@ -82,7 +82,7 @@ class Mastermind
   end
 
   def valid_input?
-    return true if guess =~ /[RGBY]{4}/
+    return true if guess =~ /^[RGBY]{4}$/
   end
 
   def end_round?

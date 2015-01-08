@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     coderay (1.1.0)
+    colorize (0.7.5)
     method_source (0.8.2)
     minitest (5.4.3)
     pry (0.10.1)
@@ -16,6 +17,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  colorize
   minitest
   pry
   pry-nav
