@@ -1,12 +1,13 @@
 require 'pry'
 
 class Mastermind
-  attr_reader   :printer, :game_in_progress
-  attr_accessor :sequence, :guess
+  attr_reader   :printer, :guess, :game_in_progress, :guesses_taken
+  attr_accessor :sequence
 
   def initialize(printer)
     @printer = printer
     @game_in_progress = false
+    @guesses_taken = 0
     @sequence = ""
   end
 
@@ -47,11 +48,15 @@ class Mastermind
     if guess != sequence
       correct_chars = correct_chars(guess, sequence)
       correct_position = correct_position(guess, sequence)
-      [printer.incorrect_guess(guess, correct_chars, correct_position), :continue]
-    else
-      @game_in_progress = false
-      [printer.correct_guess, :continue]
+      @guesses_taken += 1
+      return [printer.incorrect_guess(guess, correct_chars, correct_position, guesses_taken), :continue]
     end
+    game_won
+  end
+
+  def game_won
+    @game_in_progress = false
+    [printer.correct_guess, :continue]
   end
 
   def valid_input?
