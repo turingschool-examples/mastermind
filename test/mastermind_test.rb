@@ -18,7 +18,7 @@ class MastermindTest < Minitest::Test
   end
 
   def test_it_starts_a_game
-    assert_equal "", mastermind.sequence
+    assert mastermind.sequence.nil?
     mastermind.execute "p"
     mastermind.sequence.chars.each do |char|
       assert ["R", "G", "B", "Y"].include? char
@@ -57,7 +57,7 @@ class MastermindTest < Minitest::Test
     mastermind.execute "p"
     mastermind.sequence = "RGBY"
     message, signal = mastermind.execute "RGBY"
-    assert message.include? "You won!"
+    assert message.include? "You won"
     assert_equal signal, :continue
   end
 

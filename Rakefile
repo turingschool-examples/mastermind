@@ -6,5 +6,6 @@ task :test do
 end
 
 task :run do
+  system 'clear'
   Dir.glob("./lib/**/*runner.rb") { |file| ruby file }
 end

@@ -1,20 +1,18 @@
 require 'pry'
 
 class Mastermind
-  attr_reader   :printer, :guess, :game_in_progress, :guesses_taken
-  attr_accessor :sequence
+  attr_reader   :printer, :guess, :in_progress, :start_time, :end_time
+  attr_accessor :sequence, :guesses_taken
 
   def initialize(printer)
     @printer = printer
-    @game_in_progress = false
-    @guesses_taken = 0
-    @sequence = ""
+    @in_progress = false
   end
 
   def execute(input)
     @input = input
     @guess = input.upcase.to_s
-    return game_menu unless game_in_progress
+    return menu unless in_progress
     play_game
   end
 
@@ -25,7 +23,7 @@ class Mastermind
     @input.downcase
   end
 
-  def game_menu
+  def menu
     return generate_sequence if input =~ /p.*/
     return [printer.read_instructions, :continue] if input =~ /i.*/
     return [printer.quit_game, :stop] if input =~ /q.*/
@@ -35,28 +33,52 @@ class Mastermind
   def play_game
     return [printer.end_round, :continue] if end_round?
     return [printer.invalid_input, :continue] unless valid_input?
-    game_status
+    status
   end
 
   def generate_sequence
-    @game_in_progress = true
+    @in_progress = true
+    @start_time = Time.now
+    @guesses_taken = 0
+    @sequence = ""
     4.times { @sequence << ["R", "Y", "G", "B"].sample }
     printer.sequence_generated
   end
 
-  def game_status
-    if guess != sequence
-      correct_chars = correct_chars(guess, sequence)
-      correct_position = correct_position(guess, sequence)
-      @guesses_taken += 1
-      return [printer.incorrect_guess(guess, correct_chars, correct_position, guesses_taken), :continue]
-    end
-    game_won
+  def status
+    return [printer.lost_game, :continue] if lost?
+    return keep_guessing unless finished?
+    player_wins
   end
 
-  def game_won
-    @game_in_progress = false
-    [printer.correct_guess, :continue]
+  def keep_guessing
+    correct_chars = correct_chars(guess, sequence)
+    correct_position = correct_position(guess, sequence)
+    @guesses_taken += 1
+    return [printer.incorrect_guess(guess, correct_chars, correct_position, guesses_taken), :continue]
+  end
+
+  def player_wins
+    @in_progress = false
+    end_time
+    [printer.correct_guess(end_time), :continue]
+  end
+
+  def lost?
+    if @guesses_taken == 10
+      @in_progress = false
+      return true
+    end
+  end
+
+  def end_time
+    @end_time = Time.now - start_time
+    mm, ss = @end_time.divmod(60)
+    "%d minutes and %d seconds" % [mm, ss]
+  end
+
+  def finished?
+    guess == sequence
   end
 
   def valid_input?
@@ -65,7 +87,7 @@ class Mastermind
 
   def end_round?
     if input == "q" || input == "quit"
-      @game_in_progress = false
+      @in_progress = false
       return true
     end
   end

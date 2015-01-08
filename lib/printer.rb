@@ -8,7 +8,7 @@ class Printer
     "How to Play MASTERMIND:\n
         1. Choosing (p)lay will generate a random, four element sequence made up
            of: (R)ed, (G)reen, (B)lue, and (Y)ellow.\n
-        2. You must then guess the sequence. Valid characters only include R,G,B,Y.\n
+        2. You must then guess the sequence in 10 turns or less. Valid characters only include R,G,B,Y.\n
         3. After each guess, Mastermind will tell you how close you are to the
            the sequence by telling you how many elements you have correct in
            your sequence as well as if any of the elements are in the correct
@@ -21,8 +21,8 @@ class Printer
     "A beginner sequence has been generated with 4 elements made up of:\n(R)ed, (Y)ellow, (B)lue, and (G)reen.\nUse (q)uit at any time to end the round.\nWhat's your guess?\n> "
   end
 
-  def correct_guess
-    "You won!\nWould you like to (p)lay again, read the (i)nstructions, or (q)uit?\n> "
+  def correct_guess(end_time)
+    "You won in #{end_time}\nWould you like to (p)lay again, read the (i)nstructions, or (q)uit?\n> "
   end
 
   def incorrect_guess(guess, correct_elements, correct_position, guesses_taken)
@@ -31,6 +31,10 @@ class Printer
 
   def invalid_input
     "Invalid input. Try again\n> "
+  end
+
+  def lost_game
+    "You lost the game by running out of guesses.\nWould you like to (p)lay again?\n> "
   end
 
   def quit_game
