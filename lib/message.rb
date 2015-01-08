@@ -1,7 +1,34 @@
+require 'colorize'
 module Message
 
+	def self.initial
+		"
+Welcome to
+,-,-,-.           .          ,-,-,-.           . 
+`,| | |   ,-. ,-. |- ,-. ,-. `,| | |   . ,-. ,-| 
+  | ; | . ,-| `-. |  |-' |     | ; | . | | | | | 
+  '   `-' `-^ `-' `' `-' '     '   `-' ' ' ' `-^    
+".colorize(:color => :cyan, :background => :black)
+	end
+
+	def self.red
+		"(r)ed".colorize(:red)
+	end
+
+	def self.green
+		"(g)reen".colorize(:green)
+	end
+
+	def self.blue
+		"(b)lue".colorize(:blue)
+	end
+
+	def self.yellow
+		"(y)ellow".colorize(:yellow)
+	end
+
 	def self.colors
-    "(r)ed,(g)reen, (b)lue, and (y)ellow"
+    "#{red}, #{green}, #{blue}, and #{yellow}"
   end
 
 	def self.welcome
@@ -13,11 +40,14 @@ module Message
 	end
 
 	def self.instructions
-		"Here is how to play... Please presse (p)lay or (q)uit"
+		"Mastermind is a code breaking game designed in 1970 by Mordecai Meirowitz.\n\nThe object of the game is to guess the secret sequence of colors. This game includes four colors: #{colors}. Your objective is to guess the correct colors with the correct sequence. After each guess you will be given a response of how many correct color elements you have entered and how many you have in the correct position. You will use this clue to make your next educated guess.\n\nExample: The secret sequence is 1.#{green}, 2.#{blue}, 3.#{red} and 4.#{green}, which is entered as 'GBRG'.\n\nIf your guess was 'BYRG' (1. #{blue}, 2. #{yellow}, 3. #{red}, 4. #{green}).\nYou would receive the following clue:\n'BYRG' has 3 of the correct elements with 2 colors in the correct location.\n\nThe three correct elements are B, R and G. The correct colors in location R and G.\n\n\nReady to play?
+
+
+		 Please presse (p)lay or (q)uit"
 	end
 
 	def self.secret_generated
-		"I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow. Use (q)uit at any time to end the game."
+		"I have generated a beginner sequence with four elements made up of: #{colors}. Use (q)uit at any time to end the game."
 	end
 
 	def self.provide_guess
@@ -63,7 +93,7 @@ module Message
   end
 
   def self.guess_and_time(game_turn, total_time)
-  	"Congratulations! You won the game in #{total_time[0]} minutes #{total_time[1]} seconds and took #{game_turn} guesses."
+  	"Congratulations! You won the game in #{total_time[0]} minutes #{total_time[1]} seconds and took #{game_turn} guesses.".colorize(:color => :cyan, :background => :black)
   end
 
   def self.play_again?
