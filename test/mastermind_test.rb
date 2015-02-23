@@ -10,6 +10,6 @@ class MastermindTest < Minitest::Test
   def test_it_wins
     mm = Mastermind.new
     result = mm.execute("BBGB")
-    assert result.downcase.include?("win")
+    assert result.message.downcase.include?("win")
   end
 end
