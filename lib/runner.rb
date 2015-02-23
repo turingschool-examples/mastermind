@@ -2,12 +2,13 @@ require './lib/mastermind'
 
 puts "Welcome to Mastermind"
 
-input = ""
 mastermind = Mastermind.new
+response = nil
 
-while input != "q"
+until response && response.status == :won
   print "> "
   input = gets.chomp
-  puts mastermind.execute(input)
+  response = mastermind.execute(input)
+  puts response.message
 end
 puts "Goodbye!"
