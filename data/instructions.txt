@@ -1,0 +1,11 @@
+The object of MASTERMIND is to guess a secret code made up of a series of different colored 'pegs,' in this case, letters representing colored pegs.
+After each guess you will receive feedback telling you how many correct elements you guessed and how many of those were in the correct position, allowing you to narrow down the possibilites.
+Duplicate colors are a possibility.
+Try to guess the secret combination in as few guesses and as quickly as possible.
+
+MENU OPTIONS
+type these at any point in the game:
+'q' or 'quit' to quit the game
+'c' or 'cheat' to see the secret code
+'i' or 'instructions' to view the instructions again
+'p' or 'play' to begin a new game
